@@ -12,6 +12,7 @@ dependencies:
   firebase_core: ^2.27.1
   flutter:
     sdk: flutter
+  flutter_gemini: ^2.0.3
   get: ^4.6.6
   http: ^1.2.1
   skeletonizer: ^1.1.0

@@ -1,8 +1,13 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:hackoverflow_mobile/firebase_options.dart';
+import 'package:flutter_gemini/flutter_gemini.dart';
 
 void main() async{
+
+
+  Gemini.init(apiKey: 'AIzaSyDXAIAvZwb-stalz1YtF6TdxDeRgh2PYSw');
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );

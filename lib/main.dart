@@ -4,8 +4,7 @@ import 'package:hackoverflow_mobile/firebase_options.dart';
 import 'package:flutter_gemini/flutter_gemini.dart';
 
 void main() async{
-
-
+  WidgetsFlutterBinding.ensureInitialized();
   Gemini.init(apiKey: 'AIzaSyDXAIAvZwb-stalz1YtF6TdxDeRgh2PYSw');
 
   await Firebase.initializeApp(

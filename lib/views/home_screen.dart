@@ -1,5 +1,12 @@
+import 'package:air_quality/air_quality.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gemini/flutter_gemini.dart';
+import 'package:flutter/rendering.dart';
+import 'package:get/get.dart';
+import 'package:hackoverflow_mobile/controllers/aqi.dart';
+import 'package:hackoverflow_mobile/controllers/gemini.dart';
+
+
+
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -9,7 +16,19 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final gemini = Gemini.instance;
+  GeminiAPI geminiAPI = Get.put(GeminiAPI());
+  AQIController aqiController = Get.put(AQIController());
+  String key = "6e4f6e00feba1e08cc548d4cc9fecc51de355508";
+  late AirQuality airQuality;
+  late List<AirQualityData> data;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    airQuality = AirQuality(key);
+  }
+
   @override
   Widget build(BuildContext context) {
     double w = MediaQuery.of(context).size.width;
@@ -18,18 +37,45 @@ class _HomeScreenState extends State<HomeScreen> {
       bottomNavigationBar: GestureDetector(
         child: Container(
           width: w,
-          height: h * 0.6,
-          color: Colors.blue,
+          height: h * 0.06,
+          color: const Color.fromARGB(255, 4, 56, 99),
         ),
         onTap: ()async {
-          await gemini.text("Write a story about a magic backpack.")
-            .then((value) => print( value?.output )) /// or value?.content?.parts?.last.text
-            .catchError((e) => print(e));
+          //String result = await geminiAPI.getGeminiData("What is an apple, and its health belifits");
+          //print(result);
+          //AirQualityData aqi = await airQuality.feedFromCity('delhi');
+          //print("AQI data: $aqi");
+          await aqiController.getAQI("19.0272734","73.1138537");
+          print(aqiController.aqiModel?.data.aqi.toString());
         },
       ),
-      body: SafeArea(
-        child: Container(),
-      ),
+      body:  SingleChildScrollView(
+          child: Column(
+            children: [
+              Stack(
+                children: [
+                  Container(
+                    width: w,
+                    height: h * 0.4,
+                    decoration: const BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: FractionalOffset.topCenter,
+                        end: FractionalOffset.bottomCenter,
+                        colors: [
+                          Color.fromARGB(163, 0, 139, 245),
+                          Color.fromARGB(255, 255, 255, 255),
+                        
+                      ],
+                      stops: [0.0,.9]
+                      )
+                    ),
+                  )
+                ],
+              )
+            ],
+          ),
+        ),
+      
     );
   }
 }

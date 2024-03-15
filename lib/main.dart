@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -5,6 +6,8 @@ import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:hackoverflow_mobile/firebase_options.dart';
 import 'package:hackoverflow_mobile/views/form.dart';
 import 'package:hackoverflow_mobile/views/home.dart';
+import 'package:hackoverflow_mobile/views/login.dart';
+import 'package:hackoverflow_mobile/views/onBoarding.dart';
 import 'package:hackoverflow_mobile/views/signup.dart';
 import 'package:hackoverflow_mobile/views/tabs/home_screen.dart';
 
@@ -28,11 +31,23 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
+    final FirebaseAuth auth = FirebaseAuth.instance;
+
+   /* if(auth.currentUser != null){
+      return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        body: SignUpPage()
+        body: Home()
       ),
     );
+    }*/
+      return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        body: Home()
+      ),
+    );
+    
+    
   }
 }

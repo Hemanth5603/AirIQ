@@ -1,9 +1,14 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
+import 'package:get/get.dart';
+import 'package:hackoverflow_mobile/models/precaution_long_model.dart';
 import 'package:http/http.dart' as http;
 
 class GeminiAPI{
+
+    PrecautionLongModel? precautionLongModel;
+    var isLoading = false.obs;
 
   static Future<Map<String, String>> getHeader()async{
     return {
@@ -39,9 +44,11 @@ class GeminiAPI{
 
       if(response.statusCode == 200){
         var jsonResponse = jsonDecode(response.body) as Map<String,dynamic>;
+        print(response.body.toString());
         return jsonResponse['candidates'][0]['content']['parts'][0]['text'];
+
       }else{
-        return 'cannot post api some error';
+        return 'cannot post api some error ${response.statusCode.toString()}';
       }
 
     }catch(e){
@@ -50,4 +57,49 @@ class GeminiAPI{
 
     return 'null data';
   }
+
+
+  Future<void> getGeminiAPIData()async{
+    isLoading(true);
+    var body = {
+      "lat":18.89,
+      "lon":73.17,
+      "pData":{
+        "breathness":"severe",
+        "interest_smooking":"Yes"
+      }
+    };
+  
+    String url = "https://air-iq-bc.onrender.com/precautions/long";
+    print("called");
+    try{
+      var response = await http.post(
+      Uri.parse(url),
+      body: jsonEncode(body)
+    );
+
+    if(response.statusCode== 200){
+      var data = jsonDecode(response.body.toString());
+      print(data.toString());
+      precautionLongModel = PrecautionLongModel.fromJson(data);
+    }else{
+      print("Error fetching api");
+    }
+    isLoading(false);
+
+    }catch(e){
+      print("error: $e");
+
+    }
+    
+
+    
+
+  }
+
+
+
+
+
+
 }

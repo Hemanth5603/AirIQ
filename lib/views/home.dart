@@ -18,9 +18,23 @@ class _HomeState extends State<Home> {
     TabItem(icon: Icons.home, title: "Home"),
     TabItem(icon: Icons.search, title: "Search"),
     TabItem(icon: Icons.settings, title: "Settings"),
-    TabItem(icon: Icons.person, title: "Profile"),
   ];
 }
+
+ List<Widget> pages = [
+      HomeScreen(),
+      PrecautionsPage(),
+      DoctorScreen(),
+  ];
+  void onChange(index){
+  setState(() {
+    selectedIndex = index;
+  });
+  
+}
+   
+
+
 
 static List<BottomNavigationBarItem> tabs = const [
       BottomNavigationBarItem(
@@ -34,30 +48,22 @@ static List<BottomNavigationBarItem> tabs = const [
         label: 'Precautions'
       ),
       BottomNavigationBarItem(
-        icon: ImageIcon(AssetImage('icons/search.png')),
-        activeIcon: ImageIcon(AssetImage('icons/search.png')),
-        label: 'Doctor'
+        icon: Icon(Icons.shopping_cart_rounded),
+        activeIcon: Icon(Icons.shopping_cart_rounded),
+        label: 'Market Place'
       ),
-      BottomNavigationBarItem(
-        icon: Icon(Icons.person_rounded),
-        activeIcon: Icon(Icons.person_rounded),
-        label: 'Profile'
-      )
    ];
       int selectedIndex = 0;
 
-List<Widget> pages = [
-  HomeScreen(),
-  PrecautionsPage(),
-  DoctorScreen(),
-  ProfileScreen(),
-];
+
+
 
   @override
   Widget build(BuildContext context) {
     double w = MediaQuery.of(context).size.width;
     double h = MediaQuery.of(context).size.height;
- 
+    
+
 
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(

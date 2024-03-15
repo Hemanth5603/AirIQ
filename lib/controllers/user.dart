@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
@@ -5,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:fluttertoast/fluttertoast.dart';
+
 
 
 import 'package:get/get_core/src/get_main.dart';                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
@@ -18,53 +21,54 @@ import 'package:shared_preferences/shared_preferences.dart';
 class UserController extends GetxController{
 
  TextEditingController healthConditions  = TextEditingController();
+ TextEditingController medicationController  = TextEditingController();
 
  TextEditingController nameController  = TextEditingController();
  TextEditingController emailController  = TextEditingController();
  TextEditingController passwordController  = TextEditingController();
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  double? latitude;
+  double? longitude;
 
 
 
 
 
-  /*Future<void> getCurrentPosition() async {
-    bool serviceEnabled = false;
-    LocationPermission permission;
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      Fluttertoast.showToast(msg: 'Please keep your location enabled');
-    }
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
+  // Future<LatLng> getCurrentLocation() async {
+  //   bool serviceEnabled = false;
+  //   LocationPermission permission;
+  //   serviceEnabled = await Geolocator.isLocationServiceEnabled();
+  //   if (!serviceEnabled) {
+  //     print('Please keep your location enabled');
+    
+  //   permission = await Geolocator.checkPermission();
+  //   if (permission == LocationPermission.denied) {
+  //     permission = await Geolocator.requestPermission();
 
-      if (permission == LocationPermission.denied) {
-        Fluttertoast.showToast(msg: 'Location Permission denied!');
-      }
-    }
-    if (permission == LocationPermission.deniedForever) {
-      Fluttertoast.showToast(msg: 'Location Permission denied Forever!');
-    }
-    Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
-    try {
-      final SharedPreferences prefs = await SharedPreferences.getInstance();
-      //List<Placemark> placemarks = await placemarkFromCoordinates(position.latitude, position.longitude);
-      //Placemark place = placemarks[0];
-
-      //userModel.value.latitude = position.latitude;
-      //userModel.value.longitude = position.longitude;
-      //userModel.value.location ="${place.street},${place.subLocality}, ${place.locality}, ${place.postalCode}, ${place.country}".obs();
-      //location =  "${place.street},${place.subLocality}, ${place.locality}, ${place.postalCode}, ${place.country}".obs();
-      //prefs.setString('loaction', location);
-    } catch (e) {
-      print(e);
-    }
-    //print("Address : ${userModel.value.location}");
-    //print(userModel.value.latitude);
-    //print(userModel.value.longitude);
-  }*/
+  //     if (permission == LocationPermission.denied) {
+  //       print('Location Permission denied!');
+  //     }
+  //   }
+  //   if (permission == LocationPermission.deniedForever) {
+  //     print('Location Permission denied Forever!');
+  //   }
+  //   Position position = await Geolocator.getCurrentPosition(
+  //       desiredAccuracy: LocationAccuracy.high);
+  //   try {
+  //     //List<Placemark> placemarks = await placemarkFromCoordinates(position.latitude, position.longitude);
+  //     //Placemark place = placemarks[0];
+  //     //print(position.latitude);
+  //     print(position.latitude.toString());
+  //     return LatLng(position.latitude, position.longitude);
+  //     //userModel.value.latitute = position.latitude;
+  //     //userModel.value.longitude = position.longitude;
+  //     //userModel.value.address ="${place.street},${place.subLocality}, ${place.locality}, ${place.postalCode}, ${place.country}".obs();
+  //     // =  "${place.street},${place.subLocality}, ${place.locality}, ${place.postalCode}, ${place.country}".obs();
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  //   return LatLng(17.4245,16.66326);
+  // }
 
 
   void signInWithGoogle() async {
@@ -119,6 +123,8 @@ class UserController extends GetxController{
           email: email, password: password);
           print("Sign up successfully"
           );
+          SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+          sharedPreferences.setString("uid", credential.user!.uid.toString());
           await createUser(credential.user!.uid.toString());
     } on FirebaseAuthException catch (e) {
       if (e.code == 'email-already-in-use') {
@@ -130,11 +136,14 @@ class UserController extends GetxController{
     return null;
   }
 
-  Future<User?> signInWithEmailAndPassword(
-      String email, String password) async {
+  Future<User?> signInWithEmailAndPassword(String email, String password) async {
     try {
       UserCredential credential = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
+
+          SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+          sharedPreferences.setString("uid",credential.user!.uid.toString());
+          createUser(credential.user!.uid.toString());
           print("User loggedin ////////////----------");
       return credential.user;
     } on FirebaseAuthException catch (e) {
@@ -164,6 +173,30 @@ class UserController extends GetxController{
     }
   }
 
+
+  Future<void> updateHealth(oxygen,equivpment,breathness,smooking,interest) async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? uid = prefs.getString("uid");
+    DocumentReference documentReference =
+        FirebaseFirestore.instance.collection('users').doc(uid);
+
+    // Update the data by pushing new fields
+    documentReference.update({
+      'health_conditions': healthConditions.text,
+      'oxygen': oxygen,
+      'equivpment':equivpment,
+      'current_medications':medicationController.text ,
+      'breathness':breathness,
+      'smooking': smooking,
+      'interest_smooking': interest,
+      // Add more fields as needed
+    }).then((value) {
+      print('New fields added successfully!');
+    }).catchError((error) {
+      print('Failed to add new fields: $error');
+    });
+
+  }
 
 
 

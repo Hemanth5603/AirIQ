@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:hackoverflow_mobile/constants/colors.dart';
 import 'package:hackoverflow_mobile/controllers/user.dart';
+import 'package:hackoverflow_mobile/views/form.dart';
 import 'package:hackoverflow_mobile/views/home.dart';
 
 class Login extends StatefulWidget {
@@ -37,18 +39,55 @@ class _LoginState extends State<Login> {
                 Container(
                   width: sw,
                   height: sh * 0.4,
-                  decoration: const BoxDecoration(
-                    color: Colors.black,
+                  decoration: BoxDecoration(
+                    color: Color.fromARGB(255, 255, 255, 255),
                     borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(25),
                       bottomRight: Radius.circular(25),
                     ),
+                    boxShadow: [
+                BoxShadow(
+                  color: Color.fromARGB(255, 236, 236, 236).withOpacity(0.5),
+                  spreadRadius: 5,
+                  blurRadius: 7,
+                  offset: Offset(0, 3), // changes position of shadow
+                ),
+              ],
+                  ),
+                  child: Center(
+                    child: Image(
+                      image: AssetImage("assets/background/login.png"),
+                      width: sw * 0.7,
+                    ),
                   ),
                 ),
+                Positioned(
+                  top: 30,
+                  left: 20,
+                  child: GestureDetector(
+                    onTap: (){
+                      Get.back();
+                    },
+                    child: Container(
+                      width: 50,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(50),
+                        color: const Color.fromARGB(255, 239, 239, 239),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(left:8.0),
+                        child: Center(
+                          child: Icon(Icons.arrow_back_ios,size: 20,),
+                        ),
+                      ),
+                    ),
+                  ),
+                )
               ],
             ),
             const SizedBox(
-              height: 10,
+              height: 30,
             ),
             Padding(
               padding: const EdgeInsets.all(10.0),
@@ -159,9 +198,9 @@ class _LoginState extends State<Login> {
                         width: sw * 0.89,
                         decoration: BoxDecoration(
                             border: Border.all(
-                                color: const Color.fromARGB(255, 59, 59, 59),
+                                color: Constants.getColor(77),
                                 width: 2),
-                            color: const Color.fromARGB(255, 33, 33, 33),
+                            color: Constants.getColor(77),
                             borderRadius:
                                 const BorderRadius.all(Radius.circular(10))),
                         child: const Center(
@@ -174,7 +213,7 @@ class _LoginState extends State<Login> {
                     ),
                     onTap: () async {
                       await userController.signInWithEmailAndPassword(userController.emailController.text, userController.passwordController.text);
-                      Get.to(Home(), transition: Transition.downToUp,duration: Duration(milliseconds: 300));
+                      Get.to(RespiratoryForm(), transition: Transition.downToUp,duration: Duration(milliseconds: 300));
                     },
                   ),
                   const SizedBox(

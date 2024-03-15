@@ -1,0 +1,6 @@
+1 Good
+2 Moderate
+3 Unhealthy_for_sensitive
+4 Unhealthy
+5 Very_Unhealthy
+6 Harazrdous

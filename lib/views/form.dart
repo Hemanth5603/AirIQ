@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/get_instance.dart';
 import 'package:hackoverflow_mobile/controllers/user.dart';
+import 'package:hackoverflow_mobile/views/home.dart';
 
 class RespiratoryForm extends StatefulWidget {
   const RespiratoryForm({super.key});
@@ -13,6 +15,11 @@ class RespiratoryForm extends StatefulWidget {
 class _RespiratoryFormState extends State<RespiratoryForm> {
   final _formKey = GlobalKey<FormState>();
   UserController userController = Get.put(UserController());
+  String oxygen = "Yes";
+  String equivpment = "Yes";
+  String breathness = "Low";
+  String smooking = "No";
+  String intrestSmoking = "Yes"; 
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +33,8 @@ class _RespiratoryFormState extends State<RespiratoryForm> {
         padding: const EdgeInsets.all(15.0),
         child: ElevatedButton(
                     onPressed: () async{
-                      
+                    await userController.updateHealth(oxygen, equivpment, breathness, smooking,intrestSmoking);
+                    Get.to(Home(), transition: Transition.downToUp, duration: Duration(milliseconds: 300));
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color.fromARGB(255, 0, 127, 115),
@@ -64,6 +72,7 @@ class _RespiratoryFormState extends State<RespiratoryForm> {
                 ),
                 SizedBox(height: 50,),
                 TextFormField(
+                  controller: userController.healthConditions,
                   decoration: InputDecoration(
                     labelText: 'Respiratory Health Conditions',
                     labelStyle: TextStyle(fontFamily: 'man-r'),
@@ -98,7 +107,11 @@ class _RespiratoryFormState extends State<RespiratoryForm> {
                       child: Text('Yes'),
                     ),
                   ],
-                  onChanged: (value) {},
+                  onChanged: (value) {
+                    setState(() {
+                      oxygen = value!;
+                    });
+                  },
                 ),
                 const SizedBox(height: 16.0),
                 DropdownButtonFormField<String>(
@@ -120,10 +133,15 @@ class _RespiratoryFormState extends State<RespiratoryForm> {
                       child: Text('Yes'),
                     ),
                   ],
-                  onChanged: (value) {},
+                  onChanged: (value) {
+                    setState(() {
+                      equivpment = value!;
+                    });
+                  },
                 ),
                 const SizedBox(height: 16.0),
                 TextFormField(
+                  controller: userController.medicationController,
                   decoration: InputDecoration(
                     labelText: 'Current medications, herbs, or supplements?',
                     labelStyle: TextStyle(fontFamily: 'man-r'),
@@ -167,7 +185,12 @@ class _RespiratoryFormState extends State<RespiratoryForm> {
                       child: Text('Severe'),
                     ),
                   ],
-                  onChanged: (value) {},
+                  onChanged: (value) {
+                    setState(() {
+                      breathness = value!;
+                    });
+                    
+                  },
                 ),
                 const SizedBox(height: 16.0),
                 DropdownButtonFormField<String>(
@@ -197,7 +220,11 @@ class _RespiratoryFormState extends State<RespiratoryForm> {
                       child: Text('Other tobacco products'),
                     ),
                   ],
-                  onChanged: (value) {},
+                  onChanged: (value) {
+                    setState(() {
+                      smooking = value!;
+                    });
+                  },
                 ),
                 const SizedBox(height: 16.0),
                 DropdownButtonFormField<String>(
@@ -223,7 +250,11 @@ class _RespiratoryFormState extends State<RespiratoryForm> {
                       child: Text('Yes'),
                     ),
                   ],
-                  onChanged: (value) {},
+                  onChanged: (value) {
+                    setState(() {
+                      intrestSmoking = value!;
+                    });
+                  },
                 ),
                 const SizedBox(height: 16.0),
                 

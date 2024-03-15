@@ -42,16 +42,16 @@ class Data {
   late final Debug debug;
   
   Data.fromJson(Map<String, dynamic> json){
-    aqi = json['aqi'];
-    idx = json['idx'];
-    attributions = List.from(json['attributions']).map((e)=>Attributions.fromJson(e)).toList();
-    city = City.fromJson(json['city']);
-    dominentpol = json['dominentpol'];
-    iaqi = Iaqi.fromJson(json['iaqi']);
-    time = Time.fromJson(json['time']);
-    forecast = Forecast.fromJson(json['forecast']);
-    debug = Debug.fromJson(json['debug']);
-  }
+  aqi = json['aqi'].toDouble(); // Convert double to double
+  idx = json['idx'].toDouble(); // Convert double to double
+  attributions = List.from(json['attributions']).map((e)=>Attributions.fromJson(e)).toList();
+  city = City.fromJson(json['city']);
+  dominentpol = json['dominentpol'];
+  iaqi = Iaqi.fromJson(json['iaqi']);
+  time = Time.fromJson(json['time']);
+  forecast = Forecast.fromJson(json['forecast']);
+  debug = Debug.fromJson(json['debug']);
+}
 
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
@@ -180,7 +180,7 @@ class H {
   H({
     required this.v,
   });
-  late final int v;
+  late final double v;
   
   H.fromJson(Map<String, dynamic> json){
     v = json['v'];
@@ -197,7 +197,7 @@ class P {
   P({
     required this.v,
   });
-  late final int v;
+  late final double v;
   
   P.fromJson(Map<String, dynamic> json){
     v = json['v'];
@@ -214,7 +214,7 @@ class Pm25 {
   Pm25({
     required this.v,
   });
-  late final int v;
+  late final double v;
   
   Pm25.fromJson(Map<String, dynamic> json){
     v = json['v'];
@@ -287,15 +287,15 @@ class Time {
   });
   late final String s;
   late final String tz;
-  late final int v;
+  late final double v;
   late final String iso;
   
   Time.fromJson(Map<String, dynamic> json){
-    s = json['s'];
-    tz = json['tz'];
-    v = json['v'];
-    iso = json['iso'];
-  }
+  s = json['s'];
+  tz = json['tz'];
+  v = json['v'].toDouble(); // Convert double to double
+  iso = json['iso'];
+}
 
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
@@ -356,10 +356,10 @@ class O3 {
     required this.max,
     required this.min,
   });
-  late final int avg;
+  late final double avg;
   late final String day;
-  late final int max;
-  late final int min;
+  late final double max;
+  late final double min;
   
   O3.fromJson(Map<String, dynamic> json){
     avg = json['avg'];
@@ -385,10 +385,10 @@ class Pm10 {
     required this.max,
     required this.min,
   });
-  late final int avg;
+  late final double avg;
   late final String day;
-  late final int max;
-  late final int min;
+  late final double max;
+  late final double min;
   
   Pm10.fromJson(Map<String, dynamic> json){
     avg = json['avg'];

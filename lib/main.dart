@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:hackoverflow_mobile/firebase_options.dart';
-import 'package:hackoverflow_mobile/views/home_screen.dart';
+import 'package:hackoverflow_mobile/views/form.dart';
+import 'package:hackoverflow_mobile/views/home.dart';
+import 'package:hackoverflow_mobile/views/signup.dart';
+import 'package:hackoverflow_mobile/views/tabs/home_screen.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,7 +31,7 @@ class MainApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        body: HomeScreen()
+        body: SignUpPage()
       ),
     );
   }

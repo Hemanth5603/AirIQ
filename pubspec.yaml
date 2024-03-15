@@ -15,7 +15,12 @@ dependencies:
     sdk: flutter
   get: ^4.6.6
   http: ^1.2.1
+  awesome_bottom_bar: ^1.0.0
   skeletonizer: ^1.1.0
+ 
+  shared_preferences: ^2.2.2
+  fluttertoast: ^8.2.4
+  google_sign_in: ^6.2.1
 
 dev_dependencies:
   flutter_test:
@@ -48,5 +53,6 @@ flutter:
 
   assets:
     - assets/fonts/
-    - assets/images/
-    - assets/icons/
+    - icons/
+    - icons/location.png
+    - icons/home.png

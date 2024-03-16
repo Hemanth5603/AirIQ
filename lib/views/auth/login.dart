@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:hackoverflow_mobile/constants/colors.dart';
 import 'package:hackoverflow_mobile/controllers/user.dart';
-import 'package:hackoverflow_mobile/views/form.dart';
+import 'package:hackoverflow_mobile/views/auth/form.dart';
 import 'package:hackoverflow_mobile/views/home.dart';
 
 class Login extends StatefulWidget {

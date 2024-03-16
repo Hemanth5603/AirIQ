@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:hackoverflow_mobile/firebase_options.dart';
-import 'package:hackoverflow_mobile/views/form.dart';
+import 'package:hackoverflow_mobile/views/auth/form.dart';
 import 'package:hackoverflow_mobile/views/home.dart';
-import 'package:hackoverflow_mobile/views/login.dart';
-import 'package:hackoverflow_mobile/views/onBoarding.dart';
-import 'package:hackoverflow_mobile/views/signup.dart';
+import 'package:hackoverflow_mobile/views/auth/login.dart';
+import 'package:hackoverflow_mobile/views/auth/onBoarding.dart';
+import 'package:hackoverflow_mobile/views/auth/signup.dart';
 import 'package:hackoverflow_mobile/views/tabs/home_screen.dart';
 
 void main() async{

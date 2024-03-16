@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:awesome_bottom_bar/awesome_bottom_bar.dart';
 import 'package:hackoverflow_mobile/constants/colors.dart';
-import 'package:hackoverflow_mobile/views/marketplace.dart';
-import 'package:hackoverflow_mobile/views/tabs/doctor.dart';
+import 'package:hackoverflow_mobile/views/tabs/marketplace.dart';
 import 'package:hackoverflow_mobile/views/tabs/home_screen.dart';
 import 'package:hackoverflow_mobile/views/tabs/precautions.dart';
 import 'package:hackoverflow_mobile/views/tabs/profile.dart';

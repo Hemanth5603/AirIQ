@@ -32,22 +32,24 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final FirebaseAuth auth = FirebaseAuth.instance;
-
-    if(auth.currentUser != null){
-      return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        body: Home()
-      ),
-    );
-    }else{
-      return GetMaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: OnBoarding()
       ),
     );
-    }
+
+    // if(auth.currentUser != null){
+      
+    // }
+    // }else{
+    //   return GetMaterialApp(
+    //   debugShowCheckedModeBanner: false,
+    //   home: Scaffold(
+    //     body: OnBoarding()
+    //   ),
+    // );
+    // }
     
     
   }

@@ -2,7 +2,7 @@
 
 Air IQ is a mobile application aimed to educate people about how the air around them is affecting them and what can they do to save themselves from the negative side effects by monitoring the AQI in realtime through open APIs.
 
-![Air IQ Demo](assets/readme_graphic2.png)
+![Air IQ Demo](assets/readme_graphic.png)
 
 > Try the app [here](https://drive.google.com/file/d/19VXZ68YjWeeiUAWezKelAq9dz6VhNUQH/view?usp=sharing)
 
@@ -12,7 +12,7 @@ In addition to its health-centric features, Air IQ serves as a comprehensive pla
 
 Powered by Gemini AI, the app's frontend boasts a user-friendly interface that seamlessly integrates all its functionalities, providing a smooth and intuitive experience for users. Meanwhile, the backend, built using Node.js and Firebase, ensures robust performance, scalability, and data security, guaranteeing a reliable and efficient service at all times. Additionally, the app also boasts a feature to locate relevant places like parks with fresh air, clinics for mediciines, and hospitals nearby.
 
-![Air IQ Demo](assets/readme_graphic.png)
+![Air IQ Demo](assets/readme_graphic2.png)
 
 Air IQ is not just an app; it's a powerful tool for individuals and communities to take charge of their health and contribute to a cleaner, safer environment for all.
 

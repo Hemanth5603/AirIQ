@@ -1,0 +1,19 @@
+{
+  "name": "air-iq",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo ain't no tests here",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@google/generative-ai": "^0.3.0",
+    "body-parser": "^1.20.2",
+    "dotenv": "^16.4.5",
+    "express": "^4.14.0"
+  }
+}

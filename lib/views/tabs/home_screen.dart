@@ -198,7 +198,7 @@ Future<void> launchParkMap(LatLng userLocation) async {
                             Container(
                               width: w,
                               height: 50,
-                              child: Text("Hi, Hemanth",style: TextStyle(fontFamily: 'man-b',fontSize: 40,color: Colors.white),),
+                              child: Text("Hi,There !",style: TextStyle(fontFamily: 'man-b',fontSize: 40,color: Colors.white),),
                             ),
                             SizedBox(height: 0,),
                             Row(

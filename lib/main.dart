@@ -13,7 +13,7 @@ import 'package:hackoverflow_mobile/views/tabs/home_screen.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
-
+  
   SystemChrome.setSystemUIOverlayStyle(
     SystemUiOverlayStyle(
       statusBarColor: Colors.transparent

@@ -1,8 +1,12 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:hackoverflow_mobile/constants/colors.dart';
 import 'package:intl/intl.dart';
+import 'package:speech_to_text/speech_recognition_result.dart';
+import 'package:speech_to_text/speech_to_text.dart';
 
 class ChatBot extends StatefulWidget {
   const ChatBot({super.key});
@@ -17,12 +21,43 @@ class _ChatBotState extends State<ChatBot> {
   static const apiKey = "AIzaSyDiWaCOr-hqvR95YL7NalbjUtaR1pElrKU";
 
   final model = GenerativeModel(model: 'gemini-pro', apiKey: apiKey);
-
+  SpeechToText _speechToText = SpeechToText();
+  bool _speechEnabled = false;
+  String words = "";
   final List<Message> _messages = [];
   var isLoading = false.obs();
+  bool isListening = false;
+  
+
+  void _initSpeech() async {
+    _speechEnabled = await _speechToText.initialize();
+    setState(() {});
+  }
+
+  void _startListening() async {
+    await _speechToText.listen(onResult: _onSpeechResult);
+    setState(() {
+      isListening = true;
+    });
+  }
+
+  void _stopListening() async {
+    await _speechToText.stop();
+    setState(() {
+      isListening = false;
+    });
+  }
+  void _onSpeechResult(SpeechRecognitionResult result) {
+    setState(() {
+      _userInput.text = result.recognizedWords;
+    });
+  }
+
+
 
   Future<void> sendMessage() async {
     final message = _userInput.text;
+    print(message);
 
     setState(() {
       _messages
@@ -39,12 +74,52 @@ class _ChatBotState extends State<ChatBot> {
   }
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _initSpeech();
+  }
+  String message = "Enter you Text here";
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: Stack(
+        children: [
+           Positioned(
+              bottom: 60,
+              right: 3,
+              child: GestureDetector(
+                child: Container(
+                  width: 55,
+                  height: 55,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(50),
+                    color: Constants.getColor(77)
+                  ),
+                  child: Center(
+                    child: Icon(_speechToText.isNotListening ? Icons.mic_off : Icons.mic,color: Colors.white,),
+                  ),
+                ),
+                 onTap: (){
+                setState(() {
+                  print("Callked");
+                  message = "Listening your voice...";
+                  _speechToText.isNotListening ? _startListening() : _stopListening();
+                  _userInput.text = "";
+                });
+              },
+                
+              ),
+          ),
+        ],
+      ),
       appBar: AppBar(
         title: Text("Breeze ",style: TextStyle(fontFamily: 'man-sb',fontSize: 18),),
       ),
       body: Container(
+
+
         
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
@@ -71,24 +146,27 @@ class _ChatBotState extends State<ChatBot> {
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(15),
                         ),
-                        label: Text('Enter Your Message'),
+                        label: Text(message),
                       ),
                     ),
                   ),
                   Spacer(),
-                  IconButton(
-                      padding: EdgeInsets.all(12),
-                      iconSize: 30,
-                      style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all(Colors.black),
-                          foregroundColor:
-                              MaterialStateProperty.all(Colors.white),
-                          shape: MaterialStateProperty.all(CircleBorder())),
-                      onPressed: () {
-                        sendMessage();
-                      },
-                      icon: Icon(Icons.send))
+                  Container(
+                    margin: EdgeInsets.only(right: 15),
+                    child: IconButton(
+                        padding: EdgeInsets.all(12),
+                        iconSize: 30,
+                        style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all(Colors.black),
+                            foregroundColor:
+                                MaterialStateProperty.all(Colors.white),
+                            shape: MaterialStateProperty.all(CircleBorder())),
+                        onPressed: () {
+                          sendMessage();
+                        },
+                        icon: Icon(Icons.send)),
+                  )
                 ],
               ),
             )

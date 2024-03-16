@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:awesome_bottom_bar/awesome_bottom_bar.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:hackoverflow_mobile/constants/colors.dart';
+import 'package:hackoverflow_mobile/controllers/user.dart';
 import 'package:hackoverflow_mobile/views/tabs/marketplace.dart';
 import 'package:hackoverflow_mobile/views/tabs/home_screen.dart';
 import 'package:hackoverflow_mobile/views/tabs/precautions.dart';
@@ -55,8 +58,13 @@ static List<BottomNavigationBarItem> tabs = const [
    ];
       int selectedIndex = 0;
 
-
-
+  UserController userController = Get.put(UserController());
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    userController.fetchProfile();
+  }
 
   @override
   Widget build(BuildContext context) {

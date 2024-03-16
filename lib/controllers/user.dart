@@ -1,3 +1,4 @@
+import 'dart:ffi';
 import 'dart:ui';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -7,6 +8,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 
 
 
@@ -14,6 +16,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:hackoverflow_mobile/models/usermodel.dart';
 
 import 'package:hackoverflow_mobile/views/home.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -29,6 +32,11 @@ class UserController extends GetxController{
   final FirebaseAuth _auth = FirebaseAuth.instance;
   double? latitude;
   double? longitude;
+
+ UserModel? userModel;
+
+  String? name;
+  String? email;
 
 
 
@@ -178,6 +186,21 @@ class UserController extends GetxController{
       print("User is un - successfully signedIn");
     }
   }
+
+  Future<void> fetchProfile() async{
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final ref = await FirebaseFirestore.instance
+        .collection("users")
+        .doc(prefs.getString('uid'))
+        .get();
+
+    Map<String, dynamic>? userData = ref.data();
+    
+    userModel!.email = userData?['email'];
+    userModel!.name = userData?['name'];
+    print(userModel!.name);
+  }
+
 
 
   Future<void> updateHealth(oxygen,equivpment,breathness,smooking,interest) async{

@@ -36,6 +36,8 @@ dependencies:
   flutter_image_compress: ^2.2.0
   image: ^4.1.7
   flutter_launcher_icons: ^0.13.1
+  speech_to_text: ^6.6.0
+  
   
 
 dev_dependencies:
@@ -86,3 +88,4 @@ flutter:
     - assets/background/
     - icons/doctor1.png
     - icons/medicine1.png
+    - lib//lang/hi.json

@@ -143,3 +143,20 @@ class GeminiAPI{
 
 
 }
+
+// {
+
+//   "hi": "Hi, There",
+//   "location":"Panvel, Mumbai",
+//   "good":"Good",
+//   "worst":"Worst",
+//   "unhealthy":"Unhealthy",
+//   "precautions", "Precautions",
+//   "avoid_smooking_or_being_around_smokers":"Avoid smoking or being around smokers",
+//   "get_regular_medical_checkups_to_ monitor_your_respiratory_health": "Get regular medical checkups to monitor your respiratory health",
+//   "learnmore":"Learn more",
+//   "breathfree": "Breath Free...",
+//   "chatdoctor":"Chat with a Doctor now",
+//   "find_parks":"Find Parks nearest to you",
+//   "find_medics": "Find Medics nearest to you",
+// }

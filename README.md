@@ -2,6 +2,8 @@
 
 Air IQ is a mobile application aimed to educate people about how the air around them is affecting them and what can they do to save themselves from the negative side effects by monitoring the AQI in realtime through open APIs.
 
+> Try the app [here](https://drive.google.com/file/d/19VXZ68YjWeeiUAWezKelAq9dz6VhNUQH/view?usp=sharing)
+
 Beyond just monitoring air quality, Air IQ goes the extra mile by offering a unique doctor consultation feature. Users can connect with healthcare professionals directly through the app to seek advice and guidance on managing health issues related to air pollution exposure, ensuring proactive and personalized care.
 
 In addition to its health-centric features, Air IQ serves as a comprehensive platform with a marketplace where users can access products and services aimed at reducing air pollution and promoting cleaner environments.
@@ -26,4 +28,4 @@ APK Link - **https://drive.google.com/file/d/1zNz18Mu3yK0g_F_yhcqDOVfonNQsTkFL/v
 - Google Maps API
 - Render.com for deploying our custom layer of APIs using our own NodeJS Backend.
 
-APK Link - **https://drive.google.com/file/d/1zNz18Mu3yK0g_F_yhcqDOVfonNQsTkFL/view?usp=sharing**
+(backend deployed from [this repo](https://github.com/CharanMN7/air_iq_bc), the code is also present here)

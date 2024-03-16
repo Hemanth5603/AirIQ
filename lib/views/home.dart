@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:awesome_bottom_bar/awesome_bottom_bar.dart';
 import 'package:hackoverflow_mobile/constants/colors.dart';
+import 'package:hackoverflow_mobile/views/marketplace.dart';
 import 'package:hackoverflow_mobile/views/tabs/doctor.dart';
 import 'package:hackoverflow_mobile/views/tabs/home_screen.dart';
 import 'package:hackoverflow_mobile/views/tabs/precautions.dart';
@@ -24,7 +25,7 @@ class _HomeState extends State<Home> {
  List<Widget> pages = [
       HomeScreen(),
       PrecautionsPage(),
-      DoctorScreen(),
+      MarketPlace(),
   ];
   void onChange(index){
   setState(() {

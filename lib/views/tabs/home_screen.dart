@@ -14,7 +14,9 @@ import 'package:hackoverflow_mobile/controllers/gemini.dart';
 import 'package:hackoverflow_mobile/controllers/user.dart';
 import 'package:hackoverflow_mobile/views/aqi_image_classification.dart';
 import 'package:hackoverflow_mobile/views/chatbot.dart';
-import 'package:hackoverflow_mobile/views/doctor_chatting_screen.dart';
+import 'package:hackoverflow_mobile/views/doctor/doctor_chatting_screen.dart';
+import 'package:hackoverflow_mobile/views/tabs/precautions.dart';
+import 'package:hackoverflow_mobile/views/tabs/profile.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -44,6 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
     // TODO: implement initState
     super.initState();
     //aqiController.getAQIData();
+    geminiAPI.getGeminiAPIDataShort();
   }
   
   @override
@@ -124,7 +127,7 @@ Future<void> launchParkMap(LatLng userLocation) async {
                                       //String ans = await geminiAPI.getGeminiData(aqiController.data);
                                       //await aqiController.getAQI(lat, lng)
                                       //print(ans);
-                                      geminiAPI.getGeminiAPIData();
+                                      //geminiAPI.getGeminiAPIData();
                                     },
                                     child: Container(
                                       width: 60,
@@ -162,16 +165,21 @@ Future<void> launchParkMap(LatLng userLocation) async {
                                     ),
                                   ),
                                   SizedBox(width: 10,),
-                                  Container(
-                                    width: 60,
-                                    height: 60,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(50),
-                                      border: Border.all(color: Colors.white,width: 1),
-                                      color: Colors.transparent,
-                                    ),
-                                    child: Center(
-                                      child: Icon(Icons.person_outline,color: Colors.white,)
+                                  GestureDetector(
+                                    onTap: (){
+                                      Get.to(ProfilePage());
+                                    },
+                                    child: Container(
+                                      width: 60,
+                                      height: 60,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(50),
+                                        border: Border.all(color: Colors.white,width: 1),
+                                        color: Colors.transparent,
+                                      ),
+                                      child: Center(
+                                        child: Icon(Icons.person_outline,color: Colors.white,)
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -217,20 +225,22 @@ Future<void> launchParkMap(LatLng userLocation) async {
                             color: Colors.white,
                           ),
                           child: Row(
-                            
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Container(
-                                width: 30,
-                                height: 30,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(60),
-                                  color: Constants.getColor(aqiController.aqiData!.airQualityIndex),
-                                ),
-                                child: Center(
-                                  child: Image(image: AssetImage('icons/leaf.png'),width: 14,color: Colors.white,),
-                                ),
-                              ),
-                              SizedBox(width: 10,),
+                              Row(
+                                children: [
+                                  Container(
+                                    width: 30,
+                                    height: 30,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(60),
+                                      color: Constants.getColor(aqiController.aqiData!.airQualityIndex),
+                                    ),
+                                    child: Center(
+                                      child: Image(image: AssetImage('icons/leaf.png'),width: 14,color: Colors.white,),
+                                    ),
+                                  ),
+                                  SizedBox(width: 10,),
                               Padding(
                                 padding: const EdgeInsets.only(bottom:8.0),
                                 child: Row(
@@ -243,7 +253,8 @@ Future<void> launchParkMap(LatLng userLocation) async {
                                   ],
                                 ),
                               ),
-                              SizedBox(width: w * 0.22),
+                                ],
+                              ),
                               Text(Constants.getTitle(aqiController.aqiData!.airQualityIndex),style: TextStyle(fontSize: 25,color: Constants.getColor(aqiController.aqiData!.airQualityIndex),fontFamily: 'man-sb'),)
                             ],
                           ),
@@ -277,7 +288,7 @@ Future<void> launchParkMap(LatLng userLocation) async {
                       Positioned(
                         top: h * 0.5,
                     child: Container(
-                      width: w,
+                      width: w * 0.92,
                       height: h * 0.25,
                       margin: EdgeInsets.all(20),
                       
@@ -285,7 +296,16 @@ Future<void> launchParkMap(LatLng userLocation) async {
                         borderRadius: BorderRadius.circular(20),
                         color:Colors.transparent
                       ),
-                      child: Padding(
+                      child:geminiAPI.isLoading.value ? Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            CircularProgressIndicator(),
+                            SizedBox(height: 10,),
+                            Text("Generating Personalized Precautions...",style: TextStyle(fontFamily: 'man-l',fontSize: 13),)
+                          ],
+                        ),
+                      ): Padding(
                         padding: EdgeInsets.all(15),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -296,9 +316,9 @@ Future<void> launchParkMap(LatLng userLocation) async {
                               ],
                             ),
                             SizedBox(height: 12,),
-                            precaution("icons/no-sunlight.png", "Avoid outdoor activities and stay indoors as much as possible"),
-                            precaution("icons/mask.png", "Consider using an air purifier indoors to help reduce exposure to particulate matter."),
-                            precaution("icons/mask.png", "Use personal protective equipment like masks when air quality is poor"),
+                            precaution("icons/no-sunlight.png", geminiAPI.precautionShortModel!.p1.toString()),
+                            precaution("icons/mask.png",  geminiAPI.precautionShortModel!.p2.toString()),
+                            precaution("icons/mask.png",  geminiAPI.precautionShortModel!.p3.toString()),
                             
                             
                           ],
@@ -330,6 +350,7 @@ Future<void> launchParkMap(LatLng userLocation) async {
                       ),
                       onTap: (){
                        // widget.onchange(1);
+                       Get.to(PrecautionsPage(),transition: Transition.rightToLeft,duration: Duration(milliseconds: 300));
                       },
                     ),
                   )
@@ -492,13 +513,7 @@ Future<void> launchParkMap(LatLng userLocation) async {
                       ],
                     ),
                   ),
-                  GestureDetector(
-                    onTap: (){
-                      Get.to(ImageClasificationScreen());
-                    },
-                    child: Container(
-                      width: w,height: h * 0.08,color: Colors.grey,),
-                  ),
+                 
                   SizedBox(height: h * 0.15,)
                     
 

@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hackoverflow_mobile/views/login.dart';
+import 'package:hackoverflow_mobile/views/signup.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class OnBoarding extends StatefulWidget {
@@ -74,7 +75,7 @@ class _OnBoardingState extends State<OnBoarding> {
                   color: Colors.black),
               child: InkWell(
                 onTap: () {
-                  Get.to(() => const Login(),
+                  Get.to(() => const SignUpPage(),
                       transition: Transition.downToUp,
                       duration: const Duration(milliseconds: 400));
                 },

@@ -2,7 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:hackoverflow_mobile/constants/colors.dart';
 import 'package:hackoverflow_mobile/controllers/user.dart';
+import 'package:hackoverflow_mobile/views/form.dart';
 import 'package:hackoverflow_mobile/views/home.dart';
 import 'package:hackoverflow_mobile/views/login.dart';
 
@@ -41,14 +43,56 @@ class _SignUpPageState extends State<SignUpPage> {
                 Container(
                   width: sw,
                   height: sh * 0.4,
-                  decoration: const BoxDecoration(
-                    color: Colors.black,
+                  decoration: BoxDecoration(
+                    color: Color.fromARGB(255, 255, 255, 255),
                     borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(25),
                       bottomRight: Radius.circular(25),
                     ),
+                    boxShadow: [
+                BoxShadow(
+                  color: Color.fromARGB(255, 236, 236, 236).withOpacity(0.5),
+                  spreadRadius: 5,
+                  blurRadius: 7,
+                  offset: Offset(0, 3), // changes position of shadow
+                ),
+              ],
+                  ),
+                  child: Center(
+                    child: Image(
+                      image: AssetImage("assets/background/sign_up.png"),
+                      width: sw * 0.6,
+                    ),
                   ),
                 ),
+                Positioned(
+                  top: 35,
+                  left: 20,
+                  child: GestureDetector(
+                    onTap: (){
+                      Get.back();
+                    },
+                    child: Container(
+                      width: 50,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(50),
+                        color: const Color.fromARGB(255, 239, 239, 239),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(left:8.0),
+                        child: Center(
+                          child: Icon(Icons.arrow_back_ios,size: 20,),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Positioned(
+                  bottom: 20,
+                  left: 15,
+                  child: Text("Welcome to AirIQ",style: TextStyle(fontFamily: 'man-b',fontSize: 25),),
+                )
               ],
             ),
             const SizedBox(
@@ -62,7 +106,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   const Text("Sign up with Email/Password",
                       style: TextStyle(
                           fontFamily: 'man-r',
-                          fontSize: 25,
+                          fontSize: 22,
                           fontWeight: FontWeight.bold)),
                   const SizedBox(
                     height: 16,
@@ -201,22 +245,22 @@ class _SignUpPageState extends State<SignUpPage> {
                         width: sw * 0.89,
                         decoration: BoxDecoration(
                             border: Border.all(
-                                color: const Color.fromARGB(255, 59, 59, 59),
+                                color: Constants.getColor(77),
                                 width: 2),
-                            color: const Color.fromARGB(255, 33, 33, 33),
+                            color: Constants.getColor(77),
                             borderRadius:
                                 const BorderRadius.all(Radius.circular(10))),
                         child: const Center(
                           child: Text(
                             "Sign up",
-                            style: TextStyle(fontSize: 20, color: Colors.white),
+                            style: TextStyle(fontSize: 20,fontFamily: "man-r", color: Colors.white ),
                           ),
                         ),
                       ),
                     ),
                     onTap: () async {
                       await userController.signUpWithEmailAndPassword(userController.emailController.text, userController.passwordController.text);
-                      Get.to(Home(), transition: Transition.downToUp,duration: Duration(milliseconds: 300));
+                      Get.to(RespiratoryForm(), transition: Transition.downToUp,duration: Duration(milliseconds: 300));
                     },
                   ),
                   const SizedBox(
@@ -235,15 +279,15 @@ class _SignUpPageState extends State<SignUpPage> {
                         width: sw * 0.89,
                         decoration: BoxDecoration(
                             border: Border.all(
-                                color: const Color.fromARGB(255, 59, 59, 59),
+                                color: Constants.getColor(77),
                                 width: 2),
-                            color: const Color.fromARGB(255, 33, 33, 33),
+                            color: Constants.getColor(77),
                             borderRadius:
                                 const BorderRadius.all(Radius.circular(10))),
                         child: const Center(
                           child: Text(
                             "Log in",
-                            style: TextStyle(fontSize: 20, color: Colors.white),
+                            style: TextStyle(fontSize: 20,fontFamily: 'man-r', color: Colors.white),
                           ),
                         ),
                       ),
@@ -253,42 +297,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     },
                   ),
                   SizedBox(height: sh * 0.05),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        width: sw * 0.23,
-                      ),
-                      InkWell(
-                        child: Container(
-                            padding: const EdgeInsets.all(10),
-                            width: 60,
-                            height: 60,
-                            decoration: BoxDecoration(
-                              color: Colors.grey.shade200,
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(10)),
-                            ),
-                            child: Container()),
-                        onTap: () async {
-                          userController.signInWithGoogle();
-                        },
-                      ),
-                      const SizedBox(
-                        width: 40,
-                      ),
-                      Container(
-                          padding: const EdgeInsets.all(10),
-                          width: 60,
-                          height: 60,
-                          decoration: BoxDecoration(
-                            color: Colors.grey.shade200,
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(10)),
-                          ),
-                          child: Container()),
-                    ],
-                  ),
+                  
                   const SizedBox(
                     height: 95,
                   ),

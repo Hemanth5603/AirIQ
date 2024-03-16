@@ -3,11 +3,13 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:hackoverflow_mobile/models/precaution_long_model.dart';
+import 'package:hackoverflow_mobile/models/precaution_short_model.dart';
 import 'package:http/http.dart' as http;
 
 class GeminiAPI{
 
     PrecautionLongModel? precautionLongModel;
+    PrecautionShortModel? precautionShortModel;
     var isLoading = false.obs;
 
   static Future<Map<String, String>> getHeader()async{
@@ -82,6 +84,44 @@ class GeminiAPI{
       var data = jsonDecode(response.body.toString());
       print(data.toString());
       precautionLongModel = PrecautionLongModel.fromJson(data);
+    }else{
+      print("Error fetching api");
+    }
+    isLoading(false);
+
+    }catch(e){
+      print("error: $e");
+
+    }
+    
+
+    
+
+  }
+
+  Future<void> getGeminiAPIDataShort()async{
+    isLoading(true);
+    var body = {
+      "lat":18.89,
+      "lon":73.17,
+      "pData":{
+        "breathness":"severe",
+        "interest_smooking":"Yes"
+      }
+    };
+  
+    String url = "https://air-iq-bc.onrender.com/precautions/short";
+    print("called");
+    try{
+      var response = await http.post(
+      Uri.parse(url),
+      body: jsonEncode(body)
+    );
+
+    if(response.statusCode== 200){
+      var data = jsonDecode(response.body.toString());
+      print(data.toString());
+      precautionShortModel = PrecautionShortModel.fromJson(data);
     }else{
       print("Error fetching api");
     }

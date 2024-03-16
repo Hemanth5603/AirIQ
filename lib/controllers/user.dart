@@ -101,16 +101,22 @@ class UserController extends GetxController{
   }
 
 
+
   Future<void> createUser(uid) async{
     try{
+      SharedPreferences prefs = await SharedPreferences.getInstance();
       final ref = FirebaseFirestore.instance
         .collection("users").doc(uid);
+      
       
       await ref.set({
         "name": nameController.text,
         "email":emailController.text,
         "password":passwordController.text
       });
+      prefs.setString('name',nameController.text);
+      prefs.setString('email',emailController.text);
+
 
     }catch(e){
       print("error $e");

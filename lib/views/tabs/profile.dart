@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:hackoverflow_mobile/constants/colors.dart';
 import 'package:hackoverflow_mobile/controllers/user.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -13,6 +14,25 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    setState(() {
+      getProfile();
+    });
+    
+  }
+  var isLoading = false.obs;
+  String name = "User";
+
+  Future<void> getProfile() async{
+    isLoading(true);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    name = prefs.getString("name")!;
+    isLoading(false);
+
+  }
   UserController userController = Get.put(UserController());
   @override
   Widget build(BuildContext context) {
@@ -20,6 +40,16 @@ class _ProfilePageState extends State<ProfilePage> {
     double w = MediaQuery.of(context).size.width;
     return SafeArea(
       child: Scaffold(
+        bottomNavigationBar: Container(
+          width: double.infinity,
+          alignment: Alignment.center,
+          height: 50,
+          decoration: BoxDecoration(color:  Constants.getColor(77)),
+          child: const Text(
+            "LogOut",
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+          ),
+        ),
         appBar: AppBar(
           backgroundColor: Constants.getColor(77)
         ),
@@ -43,28 +73,19 @@ class _ProfilePageState extends State<ProfilePage> {
                   height: 10,
                 ),
                  Text(
-                  userController.nameController.text,
+                  name,
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.normal),
                 ),
                 const Text(
-                  "maddijitendra33@gmail.com",
+                  "user@gmail.com",
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.w200),
                 ),
               ],
             ),
           ),
         ),
-        bottomNavigationBar: Container(
-          width: double.infinity,
-          alignment: Alignment.center,
-          height: 50,
-          decoration: BoxDecoration(color:  Constants.getColor(77)),
-          child: const Text(
-            "LogOut",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-          ),
-        ),
-      ),
+        )
+      
     );
   }
 }

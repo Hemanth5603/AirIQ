@@ -16,9 +16,6 @@ Powered by Gemini AI, the app's frontend boasts a user-friendly interface that s
 
 Air IQ is not just an app; it's a powerful tool for individuals and communities to take charge of their health and contribute to a cleaner, safer environment for all.
 
-
-APK Link - **https://drive.google.com/file/d/1zNz18Mu3yK0g_F_yhcqDOVfonNQsTkFL/view?usp=sharing**
-
 ## Tech Stack
 
 - Flutter
